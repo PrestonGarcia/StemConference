@@ -116,6 +116,12 @@ def getPreviousPosition(axis, currentPosition):
                 nextIndex = 0
             return columnThree[nextIndex]
 
+def numberToTable(number):
+
+    return spriteList[number]
+
+
+
 def main():
     pygame.init()
 
@@ -123,15 +129,21 @@ def main():
 
     myFont = pygame.font.SysFont("Arial", 30)
 
+    backgroundImage = pygame.image.load("bcgd.png")
+
     info = pygame.display.Info()
 
     screenWidth = info.current_w
 
     screenHeight = info.current_h
 
+    backgroundImage = pygame.transform.scale(backgroundImage, (screenWidth, screenHeight))
+
     screen = pygame.display.set_mode((screenWidth, screenHeight), pygame.FULLSCREEN)
 
     done = False
+
+    global clock
 
     clock = pygame.time.Clock()
 
@@ -155,8 +167,10 @@ def main():
 
     bottomRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4 * 3, 60, 60)
 
-    spriteList = [playerRect, topLeftTable, topMiddleTable, topRightTable, middleLeftTable, centerTable, middleRightTable,
-                  bottomLeftTable, bottomMiddleTable, bottomRightTable]
+    global spriteList
+
+    spriteList = [topLeftTable, middleLeftTable, bottomLeftTable, topMiddleTable, centerTable, bottomMiddleTable,
+                  topRightTable, middleRightTable, bottomRightTable, playerRect]
 
     playerPosition = 9
 
@@ -172,29 +186,74 @@ def main():
 
             if buttonPressed[pygame.K_DOWN] and playerPosition == 9:
                 playerPosition = 3
+                while playerRect.rectY < topMiddleTable.rectY:
+                    playerRect.rectY += screenHeight / 20
+                    time.sleep(0.5)
+                    screen.blit(backgroundImage, [0, 0])
+                    for n in spriteList:
+                        n.draw()
+                    pygame.display.flip()
+                    pygame.event.pump()
 
-            if buttonPressed[pygame.K_DOWN] and not playerPosition == 9:
+            elif buttonPressed[pygame.K_DOWN] and not playerPosition == 9:
                 playerPosition = getNextPosition("vertical", playerPosition)
-                print(playerPosition)
+                playerTable = numberToTable(playerPosition)
+                distanceFromTarget = playerRect.rectY - playerTable.rectY - 1
+                while playerRect.rectY < playerTable.rectY:
+                    playerRect.rectY -= distanceFromTarget / 5
+                    time.sleep(0.5)
+                    screen.blit(backgroundImage, [0, 0])
+                    for n in spriteList:
+                        n.draw()
+                    pygame.display.flip()
+                    pygame.event.pump()
 
-            if buttonPressed[pygame.K_UP] and not playerPosition == 9:
+            elif buttonPressed[pygame.K_UP] and not playerPosition == 9:
                 playerPosition = getPreviousPosition("vertical", playerPosition)
-                print(playerPosition)
+                playerTable = numberToTable(playerPosition)
+                distanceFromTarget = playerRect.rectY - playerTable.rectY
+                while playerRect.rectY > playerTable.rectY:
+                    playerRect.rectY -= distanceFromTarget / 5
+                    time.sleep(0.5)
+                    screen.blit(backgroundImage, [0, 0])
+                    for n in spriteList:
+                        n.draw()
+                    pygame.display.flip()
+                    pygame.event.pump()
 
-            if buttonPressed[pygame.K_RIGHT] and not playerPosition == 9:
+            elif buttonPressed[pygame.K_RIGHT] and not playerPosition == 9:
                 playerPosition = getNextPosition("horizontal", playerPosition)
-                print(playerPosition)
+                playerTable = numberToTable(playerPosition)
+                distanceFromTarget = playerRect.rectX - playerTable.rectX
+                while playerRect.rectX < playerTable.rectX:
+                    playerRect.rectX -= distanceFromTarget / 5
+                    time.sleep(0.5)
+                    screen.blit(backgroundImage, [0, 0])
+                    for n in spriteList:
+                        n.draw()
+                    pygame.display.flip()
+                    pygame.event.pump()
 
-            if buttonPressed[pygame.K_LEFT] and not playerPosition == 9:
+            elif buttonPressed[pygame.K_LEFT] and not playerPosition == 9:
                 playerPosition = getPreviousPosition("horizontal", playerPosition)
-                print(playerPosition)
+                playerTable = numberToTable(playerPosition)
+                distanceFromTarget = playerRect.rectX - playerTable.rectX
+                while playerRect.rectX > playerTable.rectX:
+                    playerRect.rectX -= distanceFromTarget / 5
+                    time.sleep(0.5)
+                    screen.blit(backgroundImage, [0, 0])
+                    for n in spriteList:
+                        n.draw()
+                    pygame.display.flip()
+                    pygame.event.pump()
 
-        screen.fill((0, 0, 0))
+        screen.blit(backgroundImage, [0, 0])
 
         for n in spriteList:
             n.draw()
 
         if playerPosition == 9:
+
             textSurface = myFont.render("Press Down to start!", False, (0, 128, 255))
 
             screen.blit(textSurface, (0, 0))
