@@ -1,19 +1,25 @@
 import pygame
 import time
 
-
+ex = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\ex.png"
+bcgd = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\bcgd.png"
+there = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\there.png"
+notthere = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\notthere.png"
 
 class rectSprite:
-    def __init__(self, screen, color, rectX, rectY, rectWidth, rectHeight):
+    def __init__(self, screen, color, rectX, rectY, rectWidth, rectHeight, image):
         self.screen = screen
         self.color = color
         self.rectX = rectX
         self.rectY = rectY
         self.rectWidth = rectWidth
         self.rectHeight = rectHeight
-    
+        self.image = image
+        self.image = pygame.image.load(image)
+        self.rect = pygame.Rect((self.rectX, self.rectY) , (self.rectWidth, self.rectHeight))
+
     def draw(self):
-        pygame.draw.rect(self.screen, (self.color), pygame.Rect(self.rectX, self.rectY, self.rectWidth, self.rectHeight))
+        self.screen.blit(self.image, (self.rectX, self.rectY))
 
 rowOne = [0, 3, 6]
 rowTwo = [1, 4, 7]
@@ -129,7 +135,7 @@ def main():
 
     myFont = pygame.font.SysFont("Arial", 30)
 
-    backgroundImage = pygame.image.load("bcgd.png")
+    backgroundImage = pygame.image.load(bcgd)
 
     info = pygame.display.Info()
 
@@ -147,30 +153,32 @@ def main():
 
     clock = pygame.time.Clock()
 
-    playerRect = rectSprite(screen, (0, 128, 255), screenWidth / 2 - 30, 0, 60, 60)
+    teacherTable = rectSprite(screen, (0, 128, 255), screenWidth / 2 - 30, 0, 60, 60, notthere)
 
-    topLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4, 60, 60)
+    playerRect = rectSprite(screen, (0, 128, 255), screenWidth / 2 - 30, 0, 60, 60, there)
 
-    topMiddleTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4, 60, 60)
+    topLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4, 60, 60, ex)
 
-    topRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4, 60, 60)
+    topMiddleTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4, 60, 60, ex)
 
-    middleLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 2, 60, 60)
+    topRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4, 60, 60, ex)
 
-    centerTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 2, 60, 60)
+    middleLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 2, 60, 60, ex)
 
-    middleRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 2, 60, 60)
+    centerTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 2, 60, 60, ex)
 
-    bottomLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4 * 3, 60, 60)
+    middleRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 2, 60, 60, ex)
 
-    bottomMiddleTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4 * 3, 60, 60)
+    bottomLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4 * 3, 60, 60, ex)
 
-    bottomRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4 * 3, 60, 60)
+    bottomMiddleTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4 * 3, 60, 60, ex)
+
+    bottomRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4 * 3, 60, 60, ex)
 
     global spriteList
 
     spriteList = [topLeftTable, middleLeftTable, bottomLeftTable, topMiddleTable, centerTable, bottomMiddleTable,
-                  topRightTable, middleRightTable, bottomRightTable, playerRect]
+                  topRightTable, middleRightTable, bottomRightTable, teacherTable,  playerRect]
 
     playerPosition = 9
 
@@ -188,6 +196,7 @@ def main():
                 playerPosition = 3
                 while playerRect.rectY < topMiddleTable.rectY:
                     playerRect.rectY += screenHeight / 20
+                    playerRect.rect.move(playerRect.rectX, playerRect.rectY)
                     time.sleep(0.5)
                     screen.blit(backgroundImage, [0, 0])
                     for n in spriteList:
