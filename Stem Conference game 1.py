@@ -126,7 +126,57 @@ def numberToTable(number):
 
     return spriteList[number]
 
-
+def moveDown(xCoords, targetTable, distanceFromTarget, direction):
+    if direction == "right":
+        while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 2):
+            playerRect.rectX -= (horizontalDistanceTables) / 20
+            screen.blit(backgroundImage, [0, 0])
+            time.sleep(0.25)
+            for n in spriteList:
+                n.draw()
+            pygame.display.flip()
+            pygame.event.pump()
+        while playerRect.rectY <= targetTable.rectY - 100:
+            playerRect.rectY -= distanceFromTarget / 10
+            screen.blit(backgroundImage, [0, 0])
+            time.sleep(0.25)
+            for n in spriteList:
+                n.draw()
+            pygame.display.flip()
+            pygame.event.pump()
+        while playerRect.rectX >= targetTable.rectX + 20:
+            playerRect.rectX += (horizontalDistanceTables) / 20
+            screen.blit(backgroundImage, [0, 0])
+            time.sleep(0.25)
+            for n in spriteList:
+                n.draw()
+            pygame.display.flip()
+            pygame.event.pump()
+    if direction == "left":
+        while playerRect.rectX >= (xCoords + (horizontalDistanceTables) / 2):
+            playerRect.rectX += (horizontalDistanceTables) / 20
+            screen.blit(backgroundImage, [0, 0])
+            time.sleep(0.25)
+            for n in spriteList:
+                n.draw()
+            pygame.display.flip()
+            pygame.event.pump()
+        while playerRect.rectY <= targetTable.rectY - 100:
+            playerRect.rectY -= distanceFromTarget / 10
+            screen.blit(backgroundImage, [0, 0])
+            time.sleep(0.25)
+            for n in spriteList:
+                n.draw()
+            pygame.display.flip()
+            pygame.event.pump()
+        while playerRect.rectX <= targetTable.rectX - 20:
+            playerRect.rectX -= (horizontalDistanceTables) / 20
+            screen.blit(backgroundImage, [0, 0])
+            time.sleep(0.25)
+            for n in spriteList:
+                n.draw()
+            pygame.display.flip()
+            pygame.event.pump()
 
 
 
@@ -139,6 +189,8 @@ def main():
 
     myFont = pygame.font.SysFont("Arial", 30)
 
+    global backgroundImage
+
     backgroundImage = pygame.image.load(bcgd)
 
     info = pygame.display.Info()
@@ -148,6 +200,8 @@ def main():
     screenHeight = info.current_h
 
     backgroundImage = pygame.transform.scale(backgroundImage, (screenWidth, screenHeight))
+
+    global screen
 
     screen = pygame.display.set_mode((screenWidth, screenHeight), pygame.FULLSCREEN)
 
@@ -181,10 +235,18 @@ def main():
 
     bottomRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4 * 3, 60, 60, ex)
 
+    global horizontalDistanceTables
+
+    horizontalDistanceTables = middleLeftTable.rectX - centerTable.rectX
+
     global spriteList
 
     spriteList = [topLeftTable, middleLeftTable, bottomLeftTable, topMiddleTable, centerTable, bottomMiddleTable,
                   topRightTable, middleRightTable, bottomRightTable, teacherTable,  playerRect]
+
+    rightList = [0, 1, 3, 4]
+
+    leftList = [6, 7]
 
     playerPosition = 9
 
@@ -260,56 +322,13 @@ def main():
                     playerPosition = getNextPosition("vertical", playerPosition)
                     playerTable = numberToTable(playerPosition)
                     distanceFromTarget = playerRect.rectY - playerTable.rectY - 1
-                    if currentPosition == 3 and playerTable == centerTable:
-                        while playerRect.rectX <= (currentXCoords - (topLeftTable.rectX - topMiddleTable.rectX) / 2):
-                            playerRect.rectX -= (topLeftTable.rectX - topMiddleTable.rectX) / 20
-                            screen.blit(backgroundImage, [0, 0])
-                            for n in spriteList:
-                                n.draw()
-                            time.sleep(0.25)
-                            pygame.display.flip()
-                            pygame.event.pump()
-                        while playerRect.rectY < playerTable.rectY - 100:
-                            playerRect.rectY -= distanceFromTarget / 10
-                            time.sleep(0.25)
-                            screen.blit(backgroundImage, [0, 0])
-                            for n in spriteList:
-                                n.draw()
-                            pygame.display.flip()
-                            pygame.event.pump()
-                        while playerRect.rectX >= playerTable.rectX + 20:
-                            playerRect.rectX += (topLeftTable.rectX - topMiddleTable.rectX) / 20
-                            screen.blit(backgroundImage, [0, 0])
-                            for n in spriteList:
-                                n.draw()
-                            time.sleep(0.25)
-                            pygame.display.flip()
-                            pygame.event.pump()
-                    if currentPosition == 4 and playerTable == bottomMiddleTable:
-                        while playerRect.rectX <= (currentXCoords - (middleLeftTable.rectX - centerTable.rectX) / 2):
-                            playerRect.rectX -= (middleLeftTable.rectX - centerTable.rectX) / 20
-                            screen.blit(backgroundImage, [0, 0])
-                            time.sleep(0.25)
-                            for n in spriteList:
-                                n.draw()
-                            pygame.display.flip()
-                            pygame.event.pump()
-                        while playerRect.rectY < playerTable.rectY - 100:
-                            playerRect.rectY -= distanceFromTarget / 10
-                            time.sleep(0.25)
-                            screen.blit(backgroundImage, [0, 0])
-                            for n in spriteList:
-                                n.draw()
-                            pygame.display.flip()
-                            pygame.event.pump()
-                        while playerRect.rectX >= playerTable.rectX + 20:
-                            playerRect.rectX += (middleLeftTable.rectX - centerTable.rectX) / 20
-                            screen.blit(backgroundImage, [0, 0])
-                            for n in spriteList:
-                                n.draw()
-                            time.sleep(0.25)
-                            pygame.display.flip()
-                            pygame.event.pump()
+                    if currentPosition in rightList:
+                        moveDown(currentXCoords, playerTable, distanceFromTarget, "right")
+                    if currentPosition in leftList:
+                        moveDown(currentXCoords, playerTable, distanceFromTarget, "left")
+
+
+
                 elif buttonPressed[pygame.K_UP] and not playerPosition == 9:
                     playerPosition = getPreviousPosition("vertical", playerPosition)
                     playerTable = numberToTable(playerPosition)
