@@ -1,10 +1,12 @@
 import pygame
 import time
+import os
 
-ex = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\ex.png"
-bcgd = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\bcgd.png"
-there = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\there.png"
-notthere = "C:\\Users\\prest\\Desktop\\Coding\\Stem Conference\\notthere.png"
+filePath = os.getcwd()
+ex = os.path.join(filePath, "ex.png")
+bcgd = os.path.join(filePath, "bcgd.png")
+there = os.path.join(filePath, "there.png")
+notthere = os.path.join(filePath, "notthere.png")
 
 class rectSprite:
     def __init__(self, screen, color, rectX, rectY, rectWidth, rectHeight, image):
