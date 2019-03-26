@@ -1,6 +1,7 @@
 import pygame
 import time
 import os
+import random
 
 filePath = os.getcwd()
 ex = os.path.join(filePath, "ex.png")
@@ -22,6 +23,17 @@ class rectSprite:
 
     def draw(self):
         self.screen.blit(self.image, (self.rectX, self.rectY))
+
+class studentSprite(rectSprite):
+    def __init__(self, screen, color, rectX, rectY, rectWidth, rectHeight, image):
+        super().__init__(screen, color, rectX, rectY, rectWidth, rectHeight, image)
+        self.confused = False
+        self.chances = 0
+    def becomeConfused(self):
+        self.confused = True
+    def resolveConfusion(self):
+        self.confused = False
+
 
 rowOne = [0, 3, 6]
 rowTwo = [1, 4, 7]
@@ -130,9 +142,13 @@ def numberToTable(number):
 
 def moveDown(xCoords, targetTable, distanceFromTarget, direction):
     if direction == "right" and not abs(distanceFromTarget) <= 100:
-        while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 2):
+        while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 4):
             playerRect.rectX -= (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -141,6 +157,10 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectY <= targetTable.rectY - 100:
             playerRect.rectY -= distanceFromTarget / 10
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -149,15 +169,23 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectX >= targetTable.rectX + 20:
             playerRect.rectX += (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
             pygame.display.flip()
             pygame.event.pump()
     if direction == "left" and not abs(distanceFromTarget) <= 100:
-        while playerRect.rectX >= (xCoords + (horizontalDistanceTables) / 2):
+        while playerRect.rectX >= (xCoords + (horizontalDistanceTables) / 4):
             playerRect.rectX += (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -166,6 +194,10 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectY <= targetTable.rectY - 100:
             playerRect.rectY -= distanceFromTarget / 10
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -174,6 +206,10 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectX <= targetTable.rectX - 20:
             playerRect.rectX -= (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -183,9 +219,13 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
 def moveUp(xCoords, targetTable, distanceFromTarget, direction):
     if direction == "right" and not abs(distanceFromTarget) <= 100:
         print(distanceFromTarget)
-        while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 2):
+        while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 4):
             playerRect.rectX -= (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -194,6 +234,10 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectY >= targetTable.rectY - 100:
             playerRect.rectY -= distanceFromTarget / 10
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -202,15 +246,23 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectX >= targetTable.rectX + 20:
             playerRect.rectX += (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
             pygame.display.flip()
             pygame.event.pump()
     if direction == "left" and not abs(distanceFromTarget) <= 100:
-        while playerRect.rectX >= (xCoords + (horizontalDistanceTables) / 2):
+        while playerRect.rectX >= (xCoords + (horizontalDistanceTables) / 4):
             playerRect.rectX += (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -219,6 +271,10 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectY >= targetTable.rectY - 100:
             playerRect.rectY -= distanceFromTarget / 10
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -227,6 +283,10 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
         while playerRect.rectX <= targetTable.rectX - 20:
             playerRect.rectX -= (horizontalDistanceTables) / 20
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
             time.sleep(0.25)
             for n in spriteList:
                 n.draw()
@@ -236,6 +296,12 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
 
 
 def main():
+    day = 1
+
+    finalAmount = 30
+
+    needNewTime = True
+
     pygame.init()
 
     pygame.font.init()
@@ -270,23 +336,23 @@ def main():
 
     playerRect = rectSprite(screen, (0, 128, 255), screenWidth / 2 - 30, 0, 60, 60, there)
 
-    topLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4, 60, 60, ex)
+    topLeftTable = studentSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4, 60, 60, ex)
 
-    topMiddleTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4, 60, 60, ex)
+    topMiddleTable = studentSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4, 60, 60, ex)
 
-    topRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4, 60, 60, ex)
+    topRightTable = studentSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4, 60, 60, ex)
 
-    middleLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 2, 60, 60, ex)
+    middleLeftTable = studentSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 2, 60, 60, ex)
 
-    centerTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 2, 60, 60, ex)
+    centerTable = studentSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 2, 60, 60, ex)
 
-    middleRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 2, 60, 60, ex)
+    middleRightTable = studentSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 2, 60, 60, ex)
 
-    bottomLeftTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4 * 3, 60, 60, ex)
+    bottomLeftTable = studentSprite(screen, (255, 128, 0), screenWidth / 5 - 30, screenHeight / 4 * 3, 60, 60, ex)
 
-    bottomMiddleTable = rectSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4 * 3, 60, 60, ex)
+    bottomMiddleTable = studentSprite(screen, (255, 128, 0), screenWidth / 2 - 30, screenHeight / 4 * 3, 60, 60, ex)
 
-    bottomRightTable = rectSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4 * 3, 60, 60, ex)
+    bottomRightTable = studentSprite(screen, (255, 128, 0), screenWidth / 5 * 4 - 30, screenHeight / 4 * 3, 60, 60, ex)
 
     global horizontalDistanceTables
 
@@ -297,6 +363,12 @@ def main():
     spriteList = [topLeftTable, middleLeftTable, bottomLeftTable, topMiddleTable, centerTable, bottomMiddleTable,
                   topRightTable, middleRightTable, bottomRightTable, teacherTable,  playerRect]
 
+    global classMates
+
+    classMates = spriteList[0:-2]
+
+    print(classMates)
+
     rightList = [0, 1, 2, 3, 4, 5]
 
     leftList = [6, 7, 8]
@@ -304,6 +376,15 @@ def main():
     playerPosition = 9
 
     startScreen = True
+
+    global dayIndicator
+
+    dayIndicator = myFont.render("Day %s" % (day), False, (0, 0, 0))
+
+    global questionMark
+
+    questionMark = myFont.render("?", False, (0, 0, 0))
+
     while not done:
         if startScreen:
             controlCaption = myFont.render("Controls:", False, (255, 255, 255))
@@ -364,6 +445,10 @@ def main():
                         playerRect.rect.move(playerRect.rectX, playerRect.rectY)
                         time.sleep(0.25)
                         screen.blit(backgroundImage, [0, 0])
+                        for n in classMates:
+                            if n.confused == True:
+                                screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+                        screen.blit(dayIndicator, (0, 0))
                         for n in spriteList:
                             n.draw()
                         pygame.display.flip()
@@ -380,6 +465,9 @@ def main():
                     if currentPosition in leftList:
                         moveDown(currentXCoords, playerTable, distanceFromTarget, "left")
 
+                if buttonPressed[pygame.K_SPACE]:
+                    numberToTable(playerPosition).resolveConfusion()
+
 
 
                 elif buttonPressed[pygame.K_UP] and not playerPosition == 9:
@@ -389,12 +477,9 @@ def main():
                     distanceFromTarget = playerRect.rectY - playerTable.rectY
                     currentXCoords = int(playerRect.rectX)
                     if currentPosition in rightList:
-                        print("right")
                         moveUp(currentXCoords, playerTable, distanceFromTarget, "right")
                     if currentPosition in leftList:
-                        print("left")
                         moveUp(currentXCoords, playerTable, distanceFromTarget, "left")
-
                 elif buttonPressed[pygame.K_RIGHT] and not playerPosition == 9:
                     playerPosition = getNextPosition("horizontal", playerPosition)
                     playerTable = numberToTable(playerPosition)
@@ -403,6 +488,10 @@ def main():
                         playerRect.rectX -= distanceFromTarget / 10
                         time.sleep(0.25)
                         screen.blit(backgroundImage, [0, 0])
+                        for n in classMates:
+                            if n.confused == True:
+                                screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+                        screen.blit(dayIndicator, (0, 0))
                         for n in spriteList:
                             n.draw()
                         pygame.display.flip()
@@ -416,12 +505,20 @@ def main():
                         playerRect.rectX -= distanceFromTarget / 10
                         time.sleep(0.25)
                         screen.blit(backgroundImage, [0, 0])
+                        for n in classMates:
+                            if n.confused == True:
+                                screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+                        screen.blit(dayIndicator, (0, 0))
                         for n in spriteList:
                             n.draw()
                         pygame.display.flip()
                         pygame.event.pump()
 
             screen.blit(backgroundImage, [0, 0])
+            for n in classMates:
+                if n.confused == True:
+                    screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
+            screen.blit(dayIndicator, (0, 0))
 
             for n in spriteList:
                 n.draw()
@@ -430,7 +527,36 @@ def main():
 
                 textSurface = myFont.render("Press Down to start!", False, (0, 128, 255))
 
-                screen.blit(textSurface, (0, 0))
+                screen.blit(textSurface, (screenWidth / 2 - 90, screenHeight / 2))
+
+        screen.blit(dayIndicator, (0, 0))
+
+        if needNewTime:
+
+            recordedTime = time.time()
+
+            needNewTime = False
+
+        elif time.time() >= (recordedTime + 10):
+
+            for n in classMates:
+
+                if n.confused == True:
+                    n.chances += 1
+                if n.chances == 2:
+                    finalAmount -= 2
+                    n.resolveConfusion()
+
+                chance = random.randint(day, 10)
+
+                if chance == 10:
+                    n.becomeConfused()
+
+            needNewTime = True
+
+        for n in classMates:
+            if n.confused == True:
+                screen.blit(questionMark, (n.rectX + 40, n.rectY - 10))
 
         pygame.display.flip()
 
