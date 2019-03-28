@@ -9,7 +9,7 @@ bcgd = os.path.join(filePath, "bcgd.png")
 there = os.path.join(filePath, "there.png")
 notthere = os.path.join(filePath, "notthere.png")
 idle = os.path.join(filePath, "idle.png")
-questionMark = os.path.join(filePath, "questionMark.png")
+replayButtonPath = os.path.join(filePath, "replayButton.png")
 
 class rectSprite:
     def __init__(self, screen, color, rectX, rectY, rectWidth, rectHeight, image):
@@ -143,6 +143,8 @@ def numberToTable(number):
     return spriteList[number]
 
 def moveDown(xCoords, targetTable, distanceFromTarget, direction):
+    questionMark = os.path.join(filePath, "questionMark.png")
+    questionMark = pygame.image.load(questionMark)
     if direction == "right" and not abs(distanceFromTarget) <= 80:
         while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 4):
             playerRect.rectX -= (horizontalDistanceTables) / 40
@@ -219,6 +221,8 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
             pygame.event.pump()
 
 def moveUp(xCoords, targetTable, distanceFromTarget, direction):
+    questionMark = os.path.join(filePath, "questionMark.png")
+    questionMark = pygame.image.load(questionMark)
     if direction == "right" and not abs(distanceFromTarget) <= 80:
         while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 4):
             playerRect.rectX -= (horizontalDistanceTables) / 40
@@ -295,8 +299,56 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
             pygame.event.pump()
 
 
+def gameOver():
+
+    done = False
+
+    while not done:
+
+        for event in pygame.event.get():
+
+
+
+            buttonPressed = pygame.key.get_pressed()
+
+            if buttonPressed[pygame.K_ESCAPE] or event.type == pygame.QUIT:
+                done = True
+
+            screen.fill((0, 0, 0))
+
+            gameOverText = myFont.render("Game over, you didn't have enough money!", False, (255, 255, 255))
+
+            replayPrompt = myFont.render("Press the button to replay", False, (255, 255, 255))
+
+            replayButton = pygame.image.load(replayButtonPath)
+
+            screen.blit(gameOverText, (screenWidth / 2 - 245, screenHeight / 4))
+
+            screen.blit(replayPrompt, (screenWidth / 2 - 140, screenHeight / 2))
+
+            screen.blit(replayButton, (screenWidth / 2 - 50, 3 * screenHeight / 4))
+
+            if (event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pos()[0] > 650
+                and pygame.mouse.get_pos()[0] < 714 and pygame.mouse.get_pos()[1] > 618 and
+                pygame.mouse.get_pos()[1] < 642):
+
+                main()
+
+
+        pygame.display.flip()
+
+        pygame.event.pump()
+
+
+
+
+
+
 
 def main():
+
+    questionMark = os.path.join(filePath, "questionMark.png")
+
     day = 1
 
     finalAmount = 30
@@ -307,6 +359,8 @@ def main():
 
     pygame.font.init()
 
+    global myFont
+
     myFont = pygame.font.SysFont("Arial", 30)
 
     global backgroundImage
@@ -315,7 +369,11 @@ def main():
 
     info = pygame.display.Info()
 
+    global screenWidth
+
     screenWidth = info.current_w
+
+    global screenHeight
 
     screenHeight = info.current_h
 
@@ -380,8 +438,6 @@ def main():
 
     dayIndicator = myFont.render("Day %s" % (day), False, (0, 0, 0))
 
-    global questionMark
-
     questionMark = pygame.image.load(questionMark)
 
     while not done:
@@ -423,7 +479,6 @@ def main():
                 buttonPressed = pygame.key.get_pressed()
 
                 if buttonPressed[pygame.K_ESCAPE] or event.type == pygame.QUIT:
-                    print("Shutting down!")
                     done = True
 
                 if buttonPressed[pygame.K_SPACE]:
@@ -434,7 +489,6 @@ def main():
                 buttonPressed = pygame.key.get_pressed()
 
                 if buttonPressed[pygame.K_ESCAPE] or event.type == pygame.QUIT:
-                    print("Shutting down!")
                     done = True
 
                 if buttonPressed[pygame.K_DOWN] and playerPosition == 9:
@@ -476,7 +530,6 @@ def main():
                     playerTable = numberToTable(playerPosition)
                     distanceFromTarget = playerRect.rectY - playerTable.rectY
                     currentXCoords = int(playerRect.rectX)
-                    print(playerPosition)
                     if currentPosition in rightList:
                         moveUp(currentXCoords, playerTable, distanceFromTarget, "right")
                     if currentPosition in leftList:
@@ -559,12 +612,19 @@ def main():
             if n.confused == True:
                 screen.blit(questionMark, (n.rectX, n.rectY))
 
+        if finalAmount <= 0:
+            gameOver()
+
+
         pygame.display.flip()
 
         pygame.event.pump()
 
         clock.tick(60)
 
+
+
     pygame.quit()
 
 main()
+
