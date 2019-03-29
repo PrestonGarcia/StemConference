@@ -146,6 +146,7 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
     questionMark = os.path.join(filePath, "questionMark.png")
     questionMark = pygame.image.load(questionMark)
     if direction == "right" and not abs(distanceFromTarget) <= 80:
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
         while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 4):
             playerRect.rectX -= (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -158,6 +159,7 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
         while playerRect.rectY <= targetTable.rectY - 80:
             playerRect.rectY -= distanceFromTarget / 40
             screen.blit(backgroundImage, [0, 0])
@@ -170,6 +172,7 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
         while playerRect.rectX >= targetTable.rectX:
             playerRect.rectX += (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -182,7 +185,9 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
     if direction == "left" and not abs(distanceFromTarget) <= 80:
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
         while playerRect.rectX >= (xCoords + (horizontalDistanceTables) / 4):
             playerRect.rectX += (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -195,6 +200,7 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
         while playerRect.rectY <= targetTable.rectY - 100:
             playerRect.rectY -= distanceFromTarget / 40
             screen.blit(backgroundImage, [0, 0])
@@ -207,6 +213,7 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
         while playerRect.rectX <= targetTable.rectX:
             playerRect.rectX -= (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -219,11 +226,13 @@ def moveDown(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
 
 def moveUp(xCoords, targetTable, distanceFromTarget, direction):
     questionMark = os.path.join(filePath, "questionMark.png")
     questionMark = pygame.image.load(questionMark)
     if direction == "right" and not abs(distanceFromTarget) <= 80:
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
         while playerRect.rectX <= (xCoords - (horizontalDistanceTables) / 4):
             playerRect.rectX -= (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -236,6 +245,7 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 4)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
         while playerRect.rectY >= targetTable.rectY - 100:
             playerRect.rectY -= distanceFromTarget / 40
             screen.blit(backgroundImage, [0, 0])
@@ -248,6 +258,7 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 4)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
         while playerRect.rectX >= targetTable.rectX:
             playerRect.rectX += (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -260,7 +271,9 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 4)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
     if direction == "left" and not abs(distanceFromTarget) <= 80:
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
         while playerRect.rectX >= (xCoords + (horizontalDistanceTables) / 4):
             playerRect.rectX += (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -273,7 +286,9 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
         while playerRect.rectY >= targetTable.rectY - 100:
+
             playerRect.rectY -= distanceFromTarget / 40
             screen.blit(backgroundImage, [0, 0])
             for n in spriteList:
@@ -285,6 +300,7 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 4)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, -90)
         while playerRect.rectX <= targetTable.rectX:
             playerRect.rectX -= (horizontalDistanceTables) / 40
             screen.blit(backgroundImage, [0, 0])
@@ -297,6 +313,7 @@ def moveUp(xCoords, targetTable, distanceFromTarget, direction):
             time.sleep(0.125 / 2)
             pygame.display.flip()
             pygame.event.pump()
+        playerRect.image = pygame.transform.rotate(playerRect.image, 90)
 
 
 def gameOver():
@@ -535,6 +552,7 @@ def main():
                     if currentPosition in leftList:
                         moveUp(currentXCoords, playerTable, distanceFromTarget, "left")
                 elif buttonPressed[pygame.K_RIGHT] and not playerPosition == 9:
+                    playerRect.image = pygame.transform.rotate(playerRect.image, 90)
                     playerPosition = getNextPosition("horizontal", playerPosition)
                     playerTable = numberToTable(playerPosition)
                     distanceFromTarget = playerRect.rectX - playerTable.rectX
@@ -550,8 +568,10 @@ def main():
                         screen.blit(dayIndicator, (0, 0))
                         pygame.display.flip()
                         pygame.event.pump()
+                    playerRect.image = pygame.transform.rotate(playerRect.image, -90)
 
                 elif buttonPressed[pygame.K_LEFT] and not playerPosition == 9:
+                    playerRect.image = pygame.transform.rotate(playerRect.image, -90)
                     playerPosition = getPreviousPosition("horizontal", playerPosition)
                     playerTable = numberToTable(playerPosition)
                     distanceFromTarget = playerRect.rectX - playerTable.rectX
@@ -567,6 +587,7 @@ def main():
                         screen.blit(dayIndicator, (0, 0))
                         pygame.display.flip()
                         pygame.event.pump()
+                    playerRect.image = pygame.transform.rotate(playerRect.image, 90)
 
             screen.blit(backgroundImage, [0, 0])
             for n in classMates:
